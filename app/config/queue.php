@@ -73,6 +73,7 @@ return array(
 			'queue'          => 'feeds', // name of the default queue
 			'exchange_name'  => 'now', // name of the exchange
 			'exchange_type'  => AMQP_EX_TYPE_DIRECT,
+			'exchange_flags' => AMQP_NOPARAM,
 		],
 
 
