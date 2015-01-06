@@ -103,7 +103,6 @@ class ProcessFeed extends Command {
 
 				// Save last item to database.
 				$feed->latest = $lastItemInDatabase;
-				$feed->save();
 			}
 
 			foreach ($feed->users as $subscriber) {
@@ -131,6 +130,8 @@ class ProcessFeed extends Command {
 		} catch (\Exception $e) {
 			// So we can do queue stuff again.
 		}
+
+		$feed->save();
 
 		//Queue::later($feed->ttl, 'feed:process', array('id' => $feed->id));
 		Queue::later($feed->ttl, 'feed:process', array('id' => $feed->id));
