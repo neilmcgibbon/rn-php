@@ -9,10 +9,11 @@
 		<div>
 			@foreach ($feed['items'] as $item)
 				<p>
-					<strong>{{ $item['timestamp'] }} {{ $item['title'] }}</strong><br />
+					<strong>{{ date('d/M/Y H:i', $item['timestamp']) }} {{ $item['title'] }}</strong><br />
 					{{ $item['content'] }}<br />
 					{{ $item['link'] }}
 				</p>
+				<hr />
 			@endforeach
 		</div>
 	</body>
