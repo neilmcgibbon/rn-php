@@ -42,7 +42,7 @@ class ProcessFeed extends Command {
 		$feed = Feed::find($feedId);
 		if (!$feed) {
 			$this->error(sprintf("Feed ID %d could not be found", $feedId));
-			return;
+			throw new \Exception("Exiting normally");
 		}
 
 		try {
@@ -60,7 +60,7 @@ class ProcessFeed extends Command {
 			if (!$mostRecentLiveItem) {
 				// No entries in this feed, maybe its broken?
 				$this->error("No entries for feed");
-				return;
+				throw new \Exception("Exiting normally");
 			}
 
 			$lastKnownTime = 0;
@@ -70,7 +70,7 @@ class ProcessFeed extends Command {
 				if (strtotime($mostRecentLiveItem->get_date()) <= $lastItemInDatabase->timestamp) {
 					// Saved item is newer than last item in feed, so don't report.
 					$this->error("Parsed item timestamp is the same or older than last known entry. Not processing.");
-					return;
+					throw new \Exception("Exiting normally");
 				}
 				$lastKnownTime = $lastItemInDatabase->timestamp;
 			}
