@@ -45,7 +45,23 @@ class SendEmail extends Command {
 			return;
 		}
 
-		mail($email->user->email, $email->subject, $email->plain);
+		$mail = new PHPMailer();
+
+		$mail->isSMTP();
+		$mail->Host = 'localhost';
+		$mail->SMTPAuth = false;
+		$mail->Port = 25;
+
+		$mail->From = 'notifications@stellarpenguin.com';
+		$mail->FromName = 'StellarPenguin notifications';
+		$mail->addAddress($email->user->emaail);
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = $email->subject;
+		$mail->Body    = $email->html;
+		$mail->AltBody = $email->plain;
+
+		$mail->send();
 
 		$email->status = "sent";
 		$email->save();
