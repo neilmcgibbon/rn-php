@@ -118,7 +118,7 @@ class ProcessFeed extends Command {
 					]
 				]);
 
-				Email::create([
+				$emailId = Email::create([
 					"subject" => "RSS Update",
 					"html" => $email->render(),
 					"plain" => strip_tags($email->render()),
@@ -127,12 +127,15 @@ class ProcessFeed extends Command {
 				]);
 
 			}
+
+			Queue::push('mail:send', array('id' => $emailId));
+
 		} catch (\Exception $e) {
 			// So we can do queue stuff again.
 		}
 
 		//Queue::later($feed->ttl, 'feed:process', array('id' => $feed->id));
-		Queue::later(10, 'feed:process', array('id' => $feed->id));
+		Queue::later($feed->ttl, 'feed:process', array('id' => $feed->id));
 
 
 	}

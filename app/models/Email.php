@@ -13,6 +13,11 @@ class Email extends Eloquent
 
 	protected $fillable = ["subject", "html", "plain","user_id", "status",];
 
+	public function user()
+	{
+		return $this->belongsTo('User');
+	}
+
 
 
 }

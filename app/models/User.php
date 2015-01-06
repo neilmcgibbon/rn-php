@@ -17,4 +17,9 @@ class User extends Eloquent
 			->withTimestamps();
 	}
 
+	public function emails() {
+		return $this->hasMany('Email');
+	}
+
+
 }

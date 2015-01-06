@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new ProcessFeed);
+Artisan::add(new SendEmail);
