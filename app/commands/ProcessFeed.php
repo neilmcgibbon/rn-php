@@ -59,6 +59,7 @@ class ProcessFeed extends Command {
 			$mostRecentLiveItem = $rss->get_item();
 			if (!$mostRecentLiveItem) {
 				// No entries in this feed, maybe its broken?
+				$feed->touch();
 				$this->error("No entries for feed");
 				throw new \Exception("Exiting normally");
 			}
@@ -69,6 +70,7 @@ class ProcessFeed extends Command {
 				// An item existed before, so we should make sure its not the same as this one.
 				if (strtotime($mostRecentLiveItem->get_date()) <= $lastItemInDatabase->timestamp) {
 					// Saved item is newer than last item in feed, so don't report.
+					$feed->touch();
 					$this->error("Parsed item timestamp is the same or older than last known entry. Not processing.");
 					throw new \Exception("Exiting normally");
 				}
@@ -103,6 +105,7 @@ class ProcessFeed extends Command {
 
 				// Save last item to database.
 				$feed->latest = $lastItemInDatabase;
+				$feed->save();
 			}
 
 			foreach ($feed->users as $subscriber) {
@@ -130,8 +133,6 @@ class ProcessFeed extends Command {
 		} catch (\Exception $e) {
 			// So we can do queue stuff again.
 		}
-
-		$feed->save();
 
 		//Queue::later($feed->ttl, 'feed:process', array('id' => $feed->id));
 		Queue::later($feed->ttl, 'feed:process', array('id' => $feed->id));
