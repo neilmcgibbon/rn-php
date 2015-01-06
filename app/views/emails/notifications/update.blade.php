@@ -4,18 +4,16 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>RSS Feed Update</h2>
-
-		<h3>{{ $feed['name'] }}</h3>
-		<p>{{ $feed['description'] }}</p>
+		<h2>RSS Feed Update for: {{ $feed['name'] }}</h2>
+		<p style="font-style: italic;">{{ $feed['description'] }}</p>
 		<div>
-			<p>
 			@foreach ($feed['items'] as $item)
-				<strong>{{ $item['timestamp'] }} {{ $item['title'] }}</strong><br />
-				{{ $item['content'] }}<br />
-				{{ $item['link'] }}
+				<p>
+					<strong>{{ $item['timestamp'] }} {{ $item['title'] }}</strong><br />
+					{{ $item['content'] }}<br />
+					{{ $item['link'] }}
+				</p>
 			@endforeach
-			</p>
 		</div>
 	</body>
 </html>

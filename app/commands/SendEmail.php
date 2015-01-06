@@ -54,7 +54,7 @@ class SendEmail extends Command {
 
 		$mail->From = 'notifications@stellarpenguin.com';
 		$mail->FromName = 'StellarPenguin notifications';
-		$mail->addAddress($email->user->emaail);
+		$mail->addAddress($email->user->email);
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = $email->subject;
