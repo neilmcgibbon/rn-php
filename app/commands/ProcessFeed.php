@@ -47,8 +47,6 @@ class ProcessFeed extends Command {
 
 		try {
 
-			$feed->latest = null;
-
 			$this->info(sprintf("Processing feed %s (ID %d)", $feed->name, $feed->id));
 
 			// Get the live RSS feed
