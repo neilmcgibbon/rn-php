@@ -77,6 +77,8 @@ class ProcessFeed extends Command {
 				$lastKnownTime = $lastItemInDatabase->timestamp;
 			}
 
+			file_put_contents("/tmp/" . $feed->id . "_" . time(). " .log", json_encode($rss->get_items()));
+
 			$newItems = [];
 			$newItemsTimes = [];
 
